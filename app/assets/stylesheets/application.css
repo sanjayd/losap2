@@ -16,3 +16,6 @@
  *= require_tree .
  *= require_self
  */
+.top-offset {
+  margin-top: 25px;
+}

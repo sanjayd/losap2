@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app='losap'>
 <head>
   <title>Losap2</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -8,7 +8,9 @@
 </head>
 <body>
 
-<%= yield %>
+  <div class="container top-offset">
+    <%= yield %>
+  </div>
 
 <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
