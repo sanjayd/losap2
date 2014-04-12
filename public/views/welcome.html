@@ -4,8 +4,8 @@
     <h1><strong>OVFC LOSAP</strong></h1>
     <h3>Enter your name or badge number:</h3>
     <input class="input-lg" type="text" data-ng-model="selectedMember" size="30"
-      data-typeahead='m as m.lastname + ", " + m.firstname + " (" + m.badgeno + ")" for m in members | filter: $viewValue'
-      data-typeahead-on-select='goToMember(selectedMember)' />
+      data-typeahead='m as m.lastname + ", " + m.firstname + " (" + m.badgeno + ")" for m in findMember($viewValue)'
+      data-typeahead-on-select='goToMember(selectedMember)' data-typeahead-min-length="3" />
     <h4>For assistance, please see Lt. Zoeller or Sec. Organek</h4>
   </div>
   <div class="col-md-2"><img src="images/taz.png"/></div>
