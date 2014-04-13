@@ -33,10 +33,7 @@ angular.module('losap').controller('WelcomeController', ['$scope', '$location', 
   'use strict';
   
   $scope.findMember = function(pattern) {
-    return MemberService.find({pattern: pattern})
-      .$promise.then(function(res) {
-        return res;
-      })
+    return MemberService.find({pattern: pattern}).$promise;
   }
     
   $scope.goToMember = function(member) {
