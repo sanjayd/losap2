@@ -47,12 +47,35 @@ angular.module('losap').filter('displayMonth', function() {
   }
 });
 
+angular.module('losap').directive('lpMonthControl', function() {
+  return {
+    restrict: 'A',
+    scope: {
+      month: '='
+    },
+    templateUrl: 'partials/month-control.html',
+    link: function(scope, element, attrs) {
+      scope.prevMonth = function() {
+        scope.month.subtract(moment.duration(1, 'months'));
+      };
+      
+      scope.hasNextMonth = function() {
+        return moment(scope.month).add(moment.duration(1, 'months')).isBefore();
+      };
+      
+      scope.nextMonth = function() {
+        scope.month.add(moment.duration(1, 'months'));
+      }
+    }
+  };
+});
+
 angular.module('losap').controller('MemberController', ['$scope', '$routeParams', '$location', 'MemberService',
   function($scope, $routeParams, $location, MemberService) {
   'use strict';
   
   $scope.member = MemberService.get({id: $routeParams.id});
-  $scope.month = moment().days(0);
+  $scope.month = moment().startOf('month');
   
   $scope.exit = function() {
     $location.path('/');
