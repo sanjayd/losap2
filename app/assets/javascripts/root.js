@@ -1,4 +1,4 @@
-angular.module('losap', ['ngRoute', 'ngResource', 'ui.bootstrap']);
+angular.module('losap', ['ngRoute', 'ngResource', 'ngSanitize', 'ui.bootstrap']);
 
 angular.module('losap').config(['$routeProvider', function($routeProvider) {
   'use strict';

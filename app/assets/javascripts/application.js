@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require angular.min
+//= require angular-sanitize.min
 //= require angular-resource.min
 //= require angular-route.min
 //= require ui-bootstrap-tpls-0.10.0.min
