@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  member_id: 1
+  date: 2014-04-13
+  hours: 1
+  deleted: false
+
+two:
+  type: 
+  member_id: 1
+  date: 2014-04-13
+  hours: 1
+  deleted: false
