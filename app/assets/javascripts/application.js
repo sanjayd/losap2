@@ -17,4 +17,5 @@
 //= require angular-resource.min
 //= require angular-route.min
 //= require ui-bootstrap-tpls-0.10.0.min
+//= require moment.min  
 //= require_tree .

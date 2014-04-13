@@ -41,9 +41,20 @@ angular.module('losap').controller('WelcomeController', ['$scope', '$location', 
   };
 }]);
 
-angular.module('losap').controller('MemberController', ['$scope', '$routeParams', 'MemberService',
-  function($scope, $routeParams, MemberService) {
+angular.module('losap').filter('displayMonth', function() {
+  return function(month) {
+    return month.format('MMMM YYYY');
+  }
+});
+
+angular.module('losap').controller('MemberController', ['$scope', '$routeParams', '$location', 'MemberService',
+  function($scope, $routeParams, $location, MemberService) {
   'use strict';
   
   $scope.member = MemberService.get({id: $routeParams.id});
+  $scope.month = moment().days(0);
+  
+  $scope.exit = function() {
+    $location.path('/');
+  };
 }]);
