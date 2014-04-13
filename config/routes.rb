@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   resources :members
+  resources :station_times
+  
+  post 'sleep_ins' => 'station_times#create_sleep_in'
+  post 'standbys' => 'station_times#create_standby'
 
   root 'root#show'
   # The priority is based upon order of creation: first created -> highest priority.
