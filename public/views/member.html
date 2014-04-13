@@ -1,6 +1,49 @@
 <div class="row text-center">
   <h2>{{member.lastname}}, {{member.firstname}} (#{{member.badgeno}})</h2>
-  <h3>{{month | displayMonth}}</h3>
+  <h3>{{month | date: 'MMMM yyyy'}}</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Standby</th>
+        <th>Sleep-In</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-ng-hide="stationTimes">
+        <td colspan="3">No sleep-ins or standbys this month</td>
+      </tr>
+      <tr data-ng-repeat="stationTime in stationTimes | orderBy: 'date'">
+        <td>{{stationTime.date | date: 'EEE, d MMM'}}</td>
+        <td>
+          <span data-ng-show="stationTime.startTime">
+            <span data-ng-switch="stationTime.deleted">
+              <span data-ng-switch-when='true'>                
+                <span class='deleted'>{{stationTime.startTime}} - {{stationTime.endTime}}</span>
+                (<a data-ng-click="undeleteStationTime(stationTime.id)">Undelete</a>)
+              </span>
+              <span data-ng-switch-default>
+                {{stationTime.startTime}} - {{stationTime.endTime}} (<a data-ng-click="deleteStationTime(stationTime.id)">Delete</a>)
+              </span>
+            </span>
+          </span>
+        </td>
+        <td>
+          <span data-ng-show="stationTime.apparatus">
+            <span data-ng-switch="stationTime.deleted">
+              <span data-ng-switch-when='true'>                
+                <span class='deleted'>{{stationTime.apparatus}}</span>
+                (<a data-ng-click="undeleteStationTime(stationTime.id)">Undelete</a>)
+              </span>
+              <span data-ng-switch-default>
+                {{stationTime.apparatus}} (<a data-ng-click="deleteStationTime(stationTime.id)">Delete</a>)
+              </span>
+            </span>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <div data-lp-month-control month="month" />
   <button type="button" class="btn" data-ng-click="exit()">Exit</button>
 </div>
