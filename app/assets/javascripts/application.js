@@ -19,4 +19,5 @@
 //= require ui-bootstrap-tpls-0.10.0.min
 //= require moment.min  
 //= require ng-rails-csrf
+//= require app
 //= require_tree .
