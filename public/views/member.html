@@ -10,33 +10,33 @@
       </tr>
     </thead>
     <tbody>
-      <tr data-ng-hide="stationTimes">
+      <tr data-ng-hide="stationTimes.length > 0">
         <td colspan="3">No sleep-ins or standbys this month</td>
       </tr>
       <tr data-ng-repeat="stationTime in stationTimes | orderBy: 'date'">
         <td>{{stationTime.date | date: 'EEE, d MMM'}}</td>
         <td>
-          <span data-ng-show="stationTime.startTime">
+          <span data-ng-show="stationTime.start_time">
             <span data-ng-switch="stationTime.deleted">
               <span data-ng-switch-when='true'>                
-                <span class='deleted'>{{stationTime.startTime}} - {{stationTime.endTime}}</span>
+                <span class='deleted'>{{stationTime.start_time | date: 'HHmm'}} - {{stationTime.end_time | date: 'HHmm'}}</span>
                 (<a data-ng-click="undeleteStationTime(stationTime.id)">Undelete</a>)
               </span>
               <span data-ng-switch-default>
-                {{stationTime.startTime}} - {{stationTime.endTime}} (<a data-ng-click="deleteStationTime(stationTime.id)">Delete</a>)
+                {{stationTime.start_time | date: 'HHmm'}} - {{stationTime.end_time | date: 'HHmm'}} (<a data-ng-click="deleteStationTime(stationTime.id)">Delete</a>)
               </span>
             </span>
           </span>
         </td>
         <td>
-          <span data-ng-show="stationTime.apparatus">
+          <span data-ng-show="stationTime.unit">
             <span data-ng-switch="stationTime.deleted">
               <span data-ng-switch-when='true'>                
-                <span class='deleted'>{{stationTime.apparatus}}</span>
+                <span class='deleted'>{{stationTime.unit}}</span>
                 (<a data-ng-click="undeleteStationTime(stationTime.id)">Undelete</a>)
               </span>
               <span data-ng-switch-default>
-                {{stationTime.apparatus}} (<a data-ng-click="deleteStationTime(stationTime.id)">Delete</a>)
+                {{stationTime.unit}} (<a data-ng-click="deleteStationTime(stationTime.id)">Delete</a>)
               </span>
             </span>
           </span>

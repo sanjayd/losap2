@@ -2,6 +2,7 @@ angular.module('losap', ['ngRoute', 'ngResource', 'ngSanitize', 'ui.bootstrap', 
 
 angular.module('losap').config(['$routeProvider', function($routeProvider) {
   'use strict';
+  
   $routeProvider.when('/', {
     templateUrl: 'views/welcome.html',
     controller: 'WelcomeController'
@@ -28,6 +29,17 @@ angular.module('losap').service('MemberService', ['$resource', function($resourc
   });
 }]);
 
+angular.module('losap').service('StationTimeService', ['$resource', function($resource) {
+  'use strict';
+  
+  return $resource('/station_times', {}, {
+    findByMonth: {
+      method: 'GET',
+      isArray: true
+    }
+  });
+}]);
+
 angular.module('losap').controller('WelcomeController', ['$scope', '$location', 'MemberService',
   function($scope, $location, MemberService) {
   'use strict';
@@ -42,6 +54,8 @@ angular.module('losap').controller('WelcomeController', ['$scope', '$location', 
 }]);
 
 angular.module('losap').directive('lpMonthControl', function() {
+  'use strict';
+  
   return {
     restrict: 'A',
     scope: {
@@ -64,79 +78,30 @@ angular.module('losap').directive('lpMonthControl', function() {
   };
 });
 
-angular.module('losap').controller('MemberController', ['$scope', '$routeParams', '$location', 'MemberService',
-  function($scope, $routeParams, $location, MemberService) {
+angular.module('losap').controller('MemberController', ['$scope', '$routeParams', 
+  '$location', 'MemberService', 'StationTimeService', '$filter',
+  function($scope, $routeParams, $location, MemberService, StationTimeService, $filter) {
   'use strict';
   
-  $scope.stationTimeData = {};
-  $scope.stationTimeData[moment('2014-04-01').toDate()] =[
-    {
-      id: 1,
-      date: '2014-04-11',
-      apparatus: 'Truck',
-      deleted: true
-    },
-    {
-      id: 2,
-      date: '2014-04-12',
-      startTime: '0900',
-      endTime: '1500',
-      deleted: false
-    },
-    {
-      id: 3,
-      date: '2014-04-16',
-      apparatus: 'Engine',
-      deleted: false
-    },
-    {
-      id: 7,
-      date: '2014-04-09',
-      startTime: '1700',
-      endTime: '2100',
-      deleted: true
+  var updateStationTimes = function() {
+    if ($scope.member) {
+      $scope.stationTimes = StationTimeService.findByMonth({
+        member_id: $scope.member.id, 
+        month: $filter('date')($scope.month, 'yyyy-MM-dd')
+      });
     }
-  ];
-  $scope.stationTimeData[moment('2014-03-01').toDate()] = [
-    {
-      id: 4,
-      date: '2014-03-01',
-      apparatus: 'Truck',
-      deleted: true
-    },
-    {
-      id: 5,
-      date: '2014-03-02',
-      startTime: '0900',
-      endTime: '1500',
-      deleted: false
-    },
-    {
-      id: 6,
-      date: '2014-03-06',
-      apparatus: 'Engine',
-      deleted: false
-    },
-    {
-      id: 8,
-      date: '2014-03-09',
-      startTime: '1700',
-      endTime: '2100',
-      deleted: true
-    }
-  ];  
+  };
   
-  $scope.member = MemberService.get({id: $routeParams.id});
   $scope.month = moment().startOf('month').toDate();
+  
+  MemberService.get({id: $routeParams.id}, function(member) {
+    $scope.member = member;
+  }).$promise.then(function() {
+    updateStationTimes();
+  });
     
   $scope.$watch('month', function() {
-    var stationTimes = undefined;
-    for(var obj in $scope.stationTimeData) {
-      if (obj == $scope.month) {
-        stationTimes = $scope.stationTimeData[obj];
-      }
-    }
-    $scope.stationTimes = stationTimes;
+    updateStationTimes();
   });
   
   $scope.deleteStationTime = function(id) {
