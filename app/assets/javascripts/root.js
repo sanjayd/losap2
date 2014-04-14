@@ -36,6 +36,11 @@ angular.module('losap').service('StationTimeService', ['$resource', function($re
     findByMonth: {
       method: 'GET',
       isArray: true
+    },
+    delete: {
+      url: '/station_times/:id',
+      method: 'PUT',
+      isArray: false
     }
   });
 }]);
@@ -104,13 +109,11 @@ angular.module('losap').controller('MemberController', ['$scope', '$routeParams'
     updateStationTimes();
   });
   
-  $scope.deleteStationTime = function(id) {
-    console.debug('deleting: ', id);
-  };
-  
-  $scope.undeleteStationTime = function(id) {
-    console.debug('undeleting: ', id);
-  };
+  $scope.setDeleted = function(stationTime, deleted) {
+    StationTimeService.delete({id: stationTime.id}, {station_time: {deleted: deleted}}, function() {
+      stationTime.deleted = deleted;
+    });
+  }
   
   $scope.exit = function() {
     $location.path('/');

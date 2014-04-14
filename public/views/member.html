@@ -20,10 +20,10 @@
             <span data-ng-switch="stationTime.deleted">
               <span data-ng-switch-when='true'>                
                 <span class='deleted'>{{stationTime.start_time | date: 'HHmm'}} - {{stationTime.end_time | date: 'HHmm'}}</span>
-                (<a data-ng-click="undeleteStationTime(stationTime.id)">Undelete</a>)
+                (<a data-ng-click="setDeleted(stationTime, false)">Undelete</a>)
               </span>
               <span data-ng-switch-default>
-                {{stationTime.start_time | date: 'HHmm'}} - {{stationTime.end_time | date: 'HHmm'}} (<a data-ng-click="deleteStationTime(stationTime.id)">Delete</a>)
+                {{stationTime.start_time | date: 'HHmm'}} - {{stationTime.end_time | date: 'HHmm'}} (<a data-ng-click="setDeleted(stationTime, true)">Delete</a>)
               </span>
             </span>
           </span>
@@ -33,10 +33,10 @@
             <span data-ng-switch="stationTime.deleted">
               <span data-ng-switch-when='true'>                
                 <span class='deleted'>{{stationTime.unit}}</span>
-                (<a data-ng-click="undeleteStationTime(stationTime.id)">Undelete</a>)
+                (<a data-ng-click="setDeleted(stationTime, false)">Undelete</a>)
               </span>
               <span data-ng-switch-default>
-                {{stationTime.unit}} (<a data-ng-click="deleteStationTime(stationTime.id)">Delete</a>)
+                {{stationTime.unit}} (<a data-ng-click="setDeleted(stationTime, true)">Delete</a>)
               </span>
             </span>
           </span>
