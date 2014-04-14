@@ -3,12 +3,12 @@ angular.module('losap', ['ngRoute', 'ngResource', 'ngSanitize', 'ui.bootstrap', 
 angular.module('losap').config(['$routeProvider', function($routeProvider) {
   'use strict';
   
-  $routeProvider.when('/', {
-    templateUrl: 'views/welcome.html',
-    controller: 'WelcomeController'
-  })
-  .when('/members/:id', {
+  $routeProvider.when('/members/:id', {
     templateUrl: 'views/member.html',
     controller: 'MemberController'
+  })
+  .otherwise({
+    templateUrl: 'views/welcome.html',
+    controller: 'WelcomeController'
   });
 }]);
