@@ -14,6 +14,22 @@ angular.module('losap').service('MemberService', ['$resource', function($resourc
   });
 }]);
 
+angular.module('losap').service('CurrentMember', [function() {
+  this.currentMember = undefined;
+  
+  this.set = function(member) {
+    this.currentMember = member;
+  };
+  
+  this.get = function() {
+    return this.currentMember;
+  };
+  
+  this.clear = function() {
+    this.currentMember = undefined;
+  };
+}]);
+
 angular.module('losap').service('StationTimeService', ['$resource', function($resource) {
   'use strict';
   

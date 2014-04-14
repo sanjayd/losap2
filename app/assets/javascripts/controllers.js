@@ -12,8 +12,8 @@ angular.module('losap').controller('WelcomeController', ['$scope', '$location', 
 }]);
 
 angular.module('losap').controller('MemberController', ['$scope', '$routeParams', 
-  '$location', 'MemberService', 'StationTimeService', '$filter',
-  function($scope, $routeParams, $location, MemberService, StationTimeService, $filter) {
+  '$location', 'MemberService', 'StationTimeService', 'CurrentMember', '$filter',
+  function($scope, $routeParams, $location, MemberService, StationTimeService, CurrentMember, $filter) {
   'use strict';
   
   var updateStationTimes = function() {
@@ -26,10 +26,10 @@ angular.module('losap').controller('MemberController', ['$scope', '$routeParams'
   };
   
   $scope.month = moment().startOf('month').toDate();
-  
+
   MemberService.get({id: $routeParams.id}, function(member) {
     $scope.member = member;
-  }).$promise.then(function() {
+    CurrentMember.set(member);
     updateStationTimes();
   });
     
@@ -43,7 +43,37 @@ angular.module('losap').controller('MemberController', ['$scope', '$routeParams'
     });
   }
   
+  $scope.newStandby = function() {
+    $location.path($location.path() + '/newStandby');
+  };
+  
   $scope.exit = function() {
     $location.path('/');
+  };
+}]);
+
+angular.module('losap').controller('NewStandbyController', ['$scope', 'CurrentMember',
+  '$location', '$routeParams', 'MemberService',
+  function($scope, CurrentMember, $location, $routeParams, MemberService) {
+  'use strict';
+  
+  $scope.member = CurrentMember.get();
+  
+  if ($scope.member === undefined || $routeParams.id != $scope.member.id) {
+    MemberService.get({id: $routeParams.id}, function(member) {
+      $scope.member = member;
+      CurrentMember.set(member);
+    });
+  }
+  
+  $scope.time = new Date();
+  
+  $scope.addStandby = function() {
+    console.debug('startTime: ', $scope.startTime);
+    console.debug('endTime: ', $scope.endTime);
+  };
+  
+  $scope.cancel = function() {
+    $location.path('/members/' + $scope.member.id);
   };
 }]);

@@ -7,6 +7,10 @@ angular.module('losap').config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/member.html',
     controller: 'MemberController'
   })
+  .when('/members/:id/newStandby', {
+    templateUrl: 'views/new-standby.html',
+    controller: 'NewStandbyController'
+  })
   .otherwise({
     templateUrl: 'views/welcome.html',
     controller: 'WelcomeController'

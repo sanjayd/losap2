@@ -1,0 +1,14 @@
+<div class="form-group">
+  <label for="{{modelName}}" class="col-md-offset-1 col-md-2 control-label">{{label}}:</label>
+  <div class="col-md-9">
+      <input type="text" id="{{modelName}}" data-ng-model="date" datepicker-popup="yyyy-MM-dd" 
+        data-show-weeks="false" data-show-button-bar="false" />
+      <select data-ng-model="hour">
+        <option data-ng-repeat="i in [] | range: 24">{{i}}</option>
+      </select>
+      :
+      <select data-ng-model="minute">
+        <option data-ng-repeat="i in [0, 15, 30, 45]">{{i}}</option>
+      </select>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="row text-center">
+  <h2>{{member.lastname}}, {{member.firstname}} (#{{member.badgeno}})</h2>
+  <p>The current time is {{time | date: 'HH:mm'}}</p>
+  <p>Add standby:</p>
+</div>
+<div class="row">
+  <form class="form-horizontal">
+    <lp-standby-times start-time="startTime" end-time="endTime"></lp-standby-times>
+    <div class="form-group">
+      <div class="col-md-offset-3 col-md-9">
+        <button type="button" class="btn btn-primary" data-ng-click="addStandby()">Add Standby</button>
+        <button type="button" class="btn" data-ng-click="cancel()">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
