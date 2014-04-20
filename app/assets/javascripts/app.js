@@ -11,6 +11,10 @@ angular.module('losap').config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/new-standby.html',
     controller: 'NewStandbyController'
   })
+  .when('/members/:id/newSleepIn', {
+    templateUrl: 'views/new-sleepin.html',
+    controller: 'NewSleepInController'
+  })
   .otherwise({
     templateUrl: 'views/welcome.html',
     controller: 'WelcomeController'

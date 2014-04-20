@@ -47,6 +47,10 @@ angular.module('losap').controller('MemberController', ['$scope', '$routeParams'
     $location.path($location.path() + '/newStandby');
   };
   
+  $scope.newSleepIn = function() {
+    $location.path($location.path() + '/newSleepIn');
+  };
+  
   $scope.exit = function() {
     $location.path('/');
   };
@@ -82,4 +86,26 @@ angular.module('losap').controller('NewStandbyController', ['$scope', 'CurrentMe
   $scope.toMember = function() {
     $location.path('/members/' + $scope.member.id);
   };
+}]);
+
+angular.module('losap').controller('NewSleepInController', ['$scope', 'CurrentMember',
+  '$location', '$routeParams', 'MemberService', 'StationTimeService',
+  function($scope, CurrentMember, $location, $routeParams, MemberService, StationTimeService) {
+  'use strict';
+  
+  $scope.member = CurrentMember.get();
+  
+  if ($scope.member === undefined || $routeParams.id != $scope.member.id) {
+    MemberService.get({id: $routeParams.id}, function(member) {
+      $scope.member = member;
+      CurrentMember.set(member);
+    });
+  }
+  
+  $scope.toMember = function() {
+    $location.path('/members/' + $scope.member.id);
+  };
+  
+  $scope.date = new Date();
+  $scope.unit = 'Engine';
 }]);
