@@ -15,7 +15,7 @@ class StationTimesController < ApplicationController
     if standby.save
       render status: :created, json: ''
     else
-      render json: sleep_in.errors
+      render json: standby.errors
     end
   end
   

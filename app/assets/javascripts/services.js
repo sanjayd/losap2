@@ -42,6 +42,11 @@ angular.module('losap').service('StationTimeService', ['$resource', function($re
       url: '/station_times/:id',
       method: 'PUT',
       isArray: false
+    },
+    addStandby: {
+      url: '/standbys',
+      method: 'POST',
+      isArray: false
     }
   });
 }]);

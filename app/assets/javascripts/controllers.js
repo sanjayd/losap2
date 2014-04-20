@@ -53,8 +53,8 @@ angular.module('losap').controller('MemberController', ['$scope', '$routeParams'
 }]);
 
 angular.module('losap').controller('NewStandbyController', ['$scope', 'CurrentMember',
-  '$location', '$routeParams', 'MemberService',
-  function($scope, CurrentMember, $location, $routeParams, MemberService) {
+  '$location', '$routeParams', 'MemberService', 'StationTimeService',
+  function($scope, CurrentMember, $location, $routeParams, MemberService, StationTimeService) {
   'use strict';
   
   $scope.member = CurrentMember.get();
@@ -69,11 +69,17 @@ angular.module('losap').controller('NewStandbyController', ['$scope', 'CurrentMe
   $scope.time = new Date();
   
   $scope.addStandby = function() {
-    console.debug('startTime: ', $scope.startTime);
-    console.debug('endTime: ', $scope.endTime);
+    StationTimeService.addStandby({standby: {
+      member_id: $scope.member.id,
+      date: moment($scope.startTime).format('YYYY-MM-DD'),
+      start_time: moment($scope.startTime).utc().format('HH:mm'),
+      end_time: moment($scope.endTime).utc().format('HH:mm')
+    }}).$promise.then(function() {
+      $scope.toMember();
+    });
   };
   
-  $scope.cancel = function() {
+  $scope.toMember = function() {
     $location.path('/members/' + $scope.member.id);
   };
 }]);
