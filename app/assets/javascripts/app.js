@@ -20,3 +20,20 @@ angular.module('losap').config(['$routeProvider', function($routeProvider) {
     controller: 'WelcomeController'
   });
 }]);
+
+angular.module('losap').run(['$rootScope', 'MemberService', '$location',
+  function($rootScope, MemberService, $location) {
+  'use strict';
+    
+  $rootScope.loadMember = function(id) {
+    if (!$rootScope.member || $rootScope.member.id != id) {
+      MemberService.get({id: id}, function(member) {
+        $rootScope.member = member;
+      });
+    }
+  };
+  
+  $rootScope.toMember = function(id) {
+    $location.path('/members/' + id);
+  };
+}]);

@@ -1,19 +1,19 @@
-angular.module('losap').controller('WelcomeController', ['$scope', '$location', 'MemberService',
-  function($scope, $location, MemberService) {
+angular.module('losap').controller('WelcomeController', ['$scope', '$rootScope',
+  'MemberService',
+  function($scope, $rootScope, MemberService) {
   'use strict';
+  
+  $rootScope.member = undefined;
   
   $scope.findMember = function(pattern) {
     return MemberService.find({pattern: pattern}).$promise;
-  }
-    
-  $scope.goToMember = function(member) {
-    $location.path('members/' + member.id);
   };
 }]);
 
-angular.module('losap').controller('MemberController', ['$scope', '$routeParams', 
-  '$location', 'MemberService', 'StationTimeService', 'CurrentMember', '$filter',
-  function($scope, $routeParams, $location, MemberService, StationTimeService, CurrentMember, $filter) {
+angular.module('losap').controller('MemberController', ['$scope',
+  '$routeParams', '$location', 'MemberService', 'StationTimeService', '$filter',
+  function($scope, $routeParams, $location, MemberService, StationTimeService,
+    $filter) {
   'use strict';
   
   var updateStationTimes = function() {
@@ -26,16 +26,11 @@ angular.module('losap').controller('MemberController', ['$scope', '$routeParams'
   };
   
   $scope.month = moment().startOf('month').toDate();
-
-  MemberService.get({id: $routeParams.id}, function(member) {
-    $scope.member = member;
-    CurrentMember.set(member);
-    updateStationTimes();
-  });
+  $scope.loadMember($routeParams.id);
     
-  $scope.$watch('month', function() {
+  $scope.$watch('[month, member]', function() {
     updateStationTimes();
-  });
+  }, true);
   
   $scope.setDeleted = function(stationTime, deleted) {
     StationTimeService.delete({id: stationTime.id}, {station_time: {deleted: deleted}}, function() {
@@ -56,20 +51,12 @@ angular.module('losap').controller('MemberController', ['$scope', '$routeParams'
   };
 }]);
 
-angular.module('losap').controller('NewStandbyController', ['$scope', 'CurrentMember',
-  '$location', '$routeParams', 'MemberService', 'StationTimeService',
-  function($scope, CurrentMember, $location, $routeParams, MemberService, StationTimeService) {
+angular.module('losap').controller('NewStandbyController', ['$scope', '$routeParams',
+  'StationTimeService',
+  function($scope, $routeParams, StationTimeService) {
   'use strict';
   
-  $scope.member = CurrentMember.get();
-  
-  if ($scope.member === undefined || $routeParams.id != $scope.member.id) {
-    MemberService.get({id: $routeParams.id}, function(member) {
-      $scope.member = member;
-      CurrentMember.set(member);
-    });
-  }
-  
+  $scope.loadMember($routeParams.id);
   $scope.time = new Date();
   
   $scope.addStandby = function() {
@@ -79,33 +66,17 @@ angular.module('losap').controller('NewStandbyController', ['$scope', 'CurrentMe
       start_time: moment($scope.startTime).utc().format('HH:mm'),
       end_time: moment($scope.endTime).utc().format('HH:mm')
     }}).$promise.then(function() {
-      $scope.toMember();
+      $scope.toMember($scope.member.id);
     });
-  };
-  
-  $scope.toMember = function() {
-    $location.path('/members/' + $scope.member.id);
   };
 }]);
 
-angular.module('losap').controller('NewSleepInController', ['$scope', 'CurrentMember',
-  '$location', '$routeParams', 'MemberService', 'StationTimeService',
-  function($scope, CurrentMember, $location, $routeParams, MemberService, StationTimeService) {
+angular.module('losap').controller('NewSleepInController', ['$scope', '$routeParams',
+  'StationTimeService',
+  function($scope, $routeParams, StationTimeService) {
   'use strict';
   
-  $scope.member = CurrentMember.get();
-  
-  if ($scope.member === undefined || $routeParams.id != $scope.member.id) {
-    MemberService.get({id: $routeParams.id}, function(member) {
-      $scope.member = member;
-      CurrentMember.set(member);
-    });
-  }
-  
-  $scope.toMember = function() {
-    $location.path('/members/' + $scope.member.id);
-  };
-  
+  $scope.loadMember($routeParams.id);
   $scope.date = new Date();
   $scope.unit = 'Engine';
 }]);

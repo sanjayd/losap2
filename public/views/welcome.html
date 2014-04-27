@@ -5,7 +5,7 @@
     <h3>Enter your name or badge number:</h3>
     <input class="input-lg" type="text" data-ng-model="selectedMember" size="30"
       data-typeahead='m as m.lastname + ", " + m.firstname + " (#" + m.badgeno + ")" for m in findMember($viewValue)'
-      data-typeahead-on-select='goToMember(selectedMember)' data-typeahead-min-length="3"
+      data-typeahead-on-select='toMember(selectedMember.id)' data-typeahead-min-length="3"
       data-typeahead-template-url="typeaheadMember.html"/>
     <h4>For assistance, please see Lt. Zoeller or Sec. Organek</h4>
   </div>
