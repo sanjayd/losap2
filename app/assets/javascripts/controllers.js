@@ -77,6 +77,16 @@ angular.module('losap').controller('NewSleepInController', ['$scope', '$routePar
   'use strict';
   
   $scope.loadMember($routeParams.id);
-  $scope.date = new Date();
+  $scope.date = moment().startOf('day').toDate();
   $scope.unit = 'Engine';
+  
+  $scope.addSleepin = function() {
+    StationTimeService.addSleepin({sleep_in: {
+      member_id: $scope.member.id,
+      date: $scope.date,
+      unit: $scope.unit
+    }}).$promise.then(function() {
+      $scope.toMember($scope.member.id);
+    });
+  };
 }]);
