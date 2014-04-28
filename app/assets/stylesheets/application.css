@@ -34,4 +34,5 @@ table th {
 
 .deleted {
   text-decoration: line-through;
+  color: #999999;
 }
