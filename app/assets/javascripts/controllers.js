@@ -63,8 +63,8 @@ angular.module('losap').controller('NewStandbyController', ['$scope', '$routePar
     StationTimeService.addStandby({standby: {
       member_id: $scope.member.id,
       date: moment($scope.startTime).format('YYYY-MM-DD'),
-      start_time: moment($scope.startTime).utc().format('HH:mm'),
-      end_time: moment($scope.endTime).utc().format('HH:mm')
+      start_time: $scope.startTime,
+      end_time: $scope.endTime
     }}).$promise.then(function() {
       $scope.toMember($scope.member.id);
     });
