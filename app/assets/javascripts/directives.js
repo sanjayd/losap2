@@ -28,7 +28,6 @@ angular.module('losap').directive('lpDatetimeInput', function() {
   
   return {
     restrict: 'E',
-    replace: true,
     scope: {
       date: '=',
       hour: '=',
