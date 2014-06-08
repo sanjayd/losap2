@@ -30,6 +30,9 @@ angular.module('losap').controller('MemberController', ['$scope',
     
   $scope.$watch('[month, member]', function() {
     updateStationTimes();
+    $scope.totals = {};
+    $scope.totals.month = StationTimeService.totals({month: $scope.month});
+    $scope.totals.year = StationTimeService.totals({year: moment($scope.month).startOf('year').toDate()});
   }, true);
   
   $scope.setDeleted = function(stationTime, deleted) {

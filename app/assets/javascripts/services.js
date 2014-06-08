@@ -22,6 +22,11 @@ angular.module('losap').service('StationTimeService', ['$resource', function($re
       method: 'GET',
       isArray: true
     },
+    totals: {
+      url: '/station_times/totals',
+      method: 'GET',
+      isArray: false
+    },
     delete: {
       url: '/station_times/:id',
       method: 'PUT',

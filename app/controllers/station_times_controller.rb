@@ -19,6 +19,10 @@ class StationTimesController < ApplicationController
     end
   end
   
+  def totals
+    render json: StationTime.totals(member_id: params[:member_id], year: params[:year], month: params[:month])
+  end
+  
   def index
     render json: StationTime.find_by_month(member_id: params[:member_id], month: params[:month])
   end

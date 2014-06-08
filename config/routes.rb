@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :members
-  resources :station_times
+  resources :station_times do
+    collection do
+      get 'totals'
+    end
+  end
   
   post 'sleep_ins' => 'station_times#create_sleep_in'
   post 'standbys' => 'station_times#create_standby'
