@@ -26,13 +26,18 @@ angular.module('losap').controller('MemberController', ['$scope',
   };
   
   $scope.month = moment().startOf('month').toDate();
+  $scope.year = moment().startOf('year').toDate();
+  $scope.totals = {};
   $scope.loadMember($routeParams.id);
     
   $scope.$watch('[month, member]', function() {
     updateStationTimes();
-    $scope.totals = {};
     $scope.totals.month = StationTimeService.totals({month: $scope.month});
-    $scope.totals.year = StationTimeService.totals({year: moment($scope.month).startOf('year').toDate()});
+    $scope.year = moment($scope.month).startOf('year').toDate();
+  }, true);
+  
+  $scope.$watch('[year, member]', function() {
+    $scope.totals.year = StationTimeService.totals({year: $scope.year});
   }, true);
   
   $scope.setDeleted = function(stationTime, deleted) {
